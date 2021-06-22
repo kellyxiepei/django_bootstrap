@@ -1,6 +1,6 @@
 from django.urls import path
 
-from common.views import foo
+from .views import foo
 
 urlpatterns = [
     path('foos/<int:pk>', foo.GetFoo.as_view()),
