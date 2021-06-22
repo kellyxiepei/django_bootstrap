@@ -34,8 +34,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.staticfiles',
     'project_tools.apps.ProjectToolsConfig',
-    'admin.apps.AdminConfig',
-    'client.apps.ClientConfig'
+    'example_app.apps.ExampleAppConfig',
 ]
 
 MIDDLEWARE = [
