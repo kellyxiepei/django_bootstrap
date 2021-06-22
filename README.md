@@ -10,7 +10,7 @@ bash django_bootstrap.sh my_new_project
 # After creating the project 
 ## 1 Install poetry
 ```
-# Maybe you'd like to create new virtual env before running this command
+# Maybe you'd like to create a new virtual env before running this command
 pip install poetry
 ```
 
