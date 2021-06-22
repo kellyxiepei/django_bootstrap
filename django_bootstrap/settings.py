@@ -33,6 +33,7 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.staticfiles',
+    'project_tools.apps.ProjectToolsConfig',
     'admin.apps.AdminConfig',
     'client.apps.ClientConfig'
 ]
