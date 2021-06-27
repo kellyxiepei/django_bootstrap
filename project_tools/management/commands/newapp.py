@@ -6,6 +6,7 @@ from distutils.dir_util import copy_tree
 from distutils.file_util import move_file
 
 from django_bootstrap.settings import BASE_DIR
+from project_tools.file_content_util import insert_text_after
 
 
 class Command(BaseCommand):
@@ -37,18 +38,21 @@ class Command(BaseCommand):
         # Add url patterns
         urls_file = BASE_DIR / 'django_bootstrap' / 'urls.py'
         file_content = urls_file.read_text(encoding='utf-8')
-        insert_point = file_content.find('urlpatterns = [') + len('urlpatterns = [')
-        new_file_content = file_content[:insert_point]
-        new_file_content += f"\n    path('api/{new_app_name_kebab}/', " \
-                            f"include(('{new_app_name}.urls', '{new_app_name}')), name='{new_app_name}'),"
-        new_file_content += file_content[insert_point:]
-        urls_file.write_text(new_file_content)
+        file_content = insert_text_after(
+            file_content,
+            'urlpatterns = [',
+            f"\n    path('api/{new_app_name_kebab}/', "
+            f"include(('{new_app_name}.urls', '{new_app_name}')), name='{new_app_name}'),"
+        )
+        urls_file.write_text(file_content)
 
         # Add installed app
         settings_file = BASE_DIR / 'django_bootstrap' / 'settings.py'
         file_content = settings_file.read_text(encoding='utf-8')
-        insert_point = file_content.find('INSTALLED_APPS = [') + len('INSTALLED_APPS = [')
-        new_file_content = file_content[:insert_point]
-        new_file_content += f"\n    '{new_app_name}.apps.{new_app_name_pascal}Config',"
-        new_file_content += file_content[insert_point:]
-        settings_file.write_text(new_file_content)
+        file_content = insert_text_after(
+            file_content,
+            'INSTALLED_APPS = [',
+            f"\n    '{new_app_name}.apps.{new_app_name_pascal}Config',"
+        )
+
+        settings_file.write_text(file_content)

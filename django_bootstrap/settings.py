@@ -9,6 +9,8 @@ https://docs.djangoproject.com/en/3.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.2/ref/settings/
 """
+import os
+
 from dynaconf import settings as dyna_settings
 from pathlib import Path
 
@@ -34,7 +36,6 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.staticfiles',
     'project_tools.apps.ProjectToolsConfig',
-    'example_app.apps.ExampleAppConfig',
 ]
 
 MIDDLEWARE = [
@@ -69,6 +70,16 @@ DATABASES = {
     }
 }
 
+CACHES = {
+    'default': {
+        'BACKEND': 'django_redis.cache.RedisCache',
+        'LOCATION': f'redis://{dyna_settings.REDIS_ADDRESS}',  # noqa
+        'OPTIONS': {
+            'CLIENT_CLASS': 'django_redis.client.DefaultClient',
+        },
+    }
+}
+
 # Internationalization
 # https://docs.djangoproject.com/en/3.2/topics/i18n/
 
@@ -91,3 +102,50 @@ STATIC_URL = '/static/'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+Path(dyna_settings.LOG_DIR).mkdir(666, True, True)
+
+LOG_LEVEL = 'DEBUG' if DEBUG else 'INFO'
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'console': {
+            'level': 'DEBUG',
+            'class': 'logging.StreamHandler',
+        },
+        'file': {
+            'level': 'DEBUG',
+            'class': 'logging.handlers.RotatingFileHandler',
+            'filename': Path(dyna_settings.LOG_DIR) / 'server_running.log',
+            'maxBytes': 1024 * 1024 * 20,
+            'backupCount': 5,
+            'formatter': 'verbose',
+        },
+    },
+    'formatters': {
+        'verbose': {
+            'format': '[%(levelname)s %(asctime)s %(name)s %(funcName)s %(lineno)d %(process)s %(thread)s ] %(message)s'
+            # noqa
+        },
+        'simple': {
+            'format': '%(levelname)s %(message)s'
+        },
+    },
+    'loggers': {
+        # configure all of Django's loggers
+        'django': {
+            'handlers': ['console', 'file'],
+            'level': LOG_LEVEL,
+            'propagate': False,
+        },
+        'django.utils.autoreload': {
+            'level': 'ERROR',
+        },
+        # root configuration – for all of our own apps
+        '': {
+            'handlers': ['console', 'file'],
+            'level': LOG_LEVEL,
+        },
+    }
+}

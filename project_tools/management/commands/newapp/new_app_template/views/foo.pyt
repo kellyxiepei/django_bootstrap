@@ -2,7 +2,7 @@ from django.views import View
 
 from ..api_schema import FooSchema, CreateFooSchema
 from ..models import Foo
-from shared.auth.authenticators import DemoAuthentication
+from shared.auth.demo.authenticator_demo import DemoAuthentication
 from shared.response import GenericJsonResponse
 from shared.view_decorators import json_request, require_authentication
 
