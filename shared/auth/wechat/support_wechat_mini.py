@@ -53,7 +53,7 @@ class WechatMiniAuthLoginView(View):
 
         resp_json = resp.json()
         if resp_json['errcode'] != 0:
-            logger.warning(f'wx mini login error:{resp}')
+            logger.warning(f'wx mini login error:{resp_json}')
             return None
 
         logger.info('verify ok')
