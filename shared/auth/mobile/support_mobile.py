@@ -4,7 +4,6 @@ import time
 import uuid
 
 from django.core.cache import cache
-from django.forms import model_to_dict
 from django.views import View
 
 from shared.auth.mobile.support_mobile_ali_sms_util import send_sms, SendSmsTooOften, SmsServiceIssue, SendSmsFailed
@@ -111,7 +110,7 @@ class MobileAuthLoginView(View):
         if not user:
             return self.ERROR_USER_NOT_EXIST
 
-        token = self.cache_token(user)
+        token = self.cache_token(mobile)
         return GenericJsonResponse(data=dict(token=token))
 
     @staticmethod
@@ -129,10 +128,10 @@ class MobileAuthLoginView(View):
         return False
 
     @staticmethod
-    def cache_token(user, expiration_time=30 * 24 * 60 * 60):
+    def cache_token(mobile, expiration_time=30 * 24 * 60 * 60):
         """ 缓存user, 生成token """
         token = uuid.uuid4().hex
-        cache.set('user_token_' + token, user, expiration_time)
-        logger.info(f"cached user: {user}, "
+        cache.set('user_token_' + token, mobile, expiration_time)
+        logger.info(f"cached user mobile: {mobile}, "
                     f"expiration time: {expiration_time}s")
         return token
