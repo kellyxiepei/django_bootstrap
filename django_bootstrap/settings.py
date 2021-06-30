@@ -103,10 +103,9 @@ STATIC_URL = '/static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-Path(dyna_settings.LOG_DIR).mkdir(666, True, True)
-
 LOG_LEVEL = 'DEBUG' if DEBUG else 'INFO'
 if not dyna_settings.as_bool('IN_ALIYUN_FC'):
+    Path(dyna_settings.LOG_DIR).mkdir(644, True, True)
     LOGGING = {
         'version': 1,
         'disable_existing_loggers': False,
