@@ -37,6 +37,6 @@ def handler(environ, start_response):
         context = environ['fc.context']
         environ['HTTP_HOST'] = '{}.{}.fc.aliyuncs.com'.format(context.account_id, context.region)
         environ['SCRIPT_NAME'] = base_path + '/'
-        environ['RUN_IN_ALIYUN_FC'] = 'True'
+        environ['IN_ALIYUN_FC'] = 'True'
 
     return application(environ, start_response)
