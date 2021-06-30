@@ -14,6 +14,7 @@ requests = "2.25.1"
 aliyun-python-sdk-core = "^2.13.35"
 redis = "3.5.3"
 django-redis = "5.0.0"
+aliyun-fc2 = "^2.5.0"
 
 [tool.poetry.dev-dependencies]
 

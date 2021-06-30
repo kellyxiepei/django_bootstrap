@@ -24,7 +24,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-hl-qs1w^vnjg&r)6)zm9o2jwca60e-#=$ckfz(l4j1d=pkzmj@'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = dyna_settings.as_bool('DEBUG')
 
 ALLOWED_HOSTS = []
 
@@ -106,46 +106,47 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 Path(dyna_settings.LOG_DIR).mkdir(666, True, True)
 
 LOG_LEVEL = 'DEBUG' if DEBUG else 'INFO'
-LOGGING = {
-    'version': 1,
-    'disable_existing_loggers': False,
-    'handlers': {
-        'console': {
-            'level': 'DEBUG',
-            'class': 'logging.StreamHandler',
+if not dyna_settings.as_bool('IN_ALIYUN_FC'):
+    LOGGING = {
+        'version': 1,
+        'disable_existing_loggers': False,
+        'handlers': {
+            'console': {
+                'level': 'DEBUG',
+                'class': 'logging.StreamHandler',
+            },
+            'file': {
+                'level': 'DEBUG',
+                'class': 'logging.handlers.RotatingFileHandler',
+                'filename': Path(dyna_settings.LOG_DIR) / 'server_running.log',
+                'maxBytes': 1024 * 1024 * 20,
+                'backupCount': 5,
+                'formatter': 'verbose',
+            },
         },
-        'file': {
-            'level': 'DEBUG',
-            'class': 'logging.handlers.RotatingFileHandler',
-            'filename': Path(dyna_settings.LOG_DIR) / 'server_running.log',
-            'maxBytes': 1024 * 1024 * 20,
-            'backupCount': 5,
-            'formatter': 'verbose',
+        'formatters': {
+            'verbose': {
+                'format': '[%(levelname)s %(asctime)s %(name)s %(funcName)s %(lineno)d %(process)s %(thread)s ] %(message)s'
+                # noqa
+            },
+            'simple': {
+                'format': '%(levelname)s %(message)s'
+            },
         },
-    },
-    'formatters': {
-        'verbose': {
-            'format': '[%(levelname)s %(asctime)s %(name)s %(funcName)s %(lineno)d %(process)s %(thread)s ] %(message)s'
-            # noqa
-        },
-        'simple': {
-            'format': '%(levelname)s %(message)s'
-        },
-    },
-    'loggers': {
-        # configure all of Django's loggers
-        'django': {
-            'handlers': ['console', 'file'],
-            'level': LOG_LEVEL,
-            'propagate': False,
-        },
-        'django.utils.autoreload': {
-            'level': 'ERROR',
-        },
-        # root configuration – for all of our own apps
-        '': {
-            'handlers': ['console', 'file'],
-            'level': LOG_LEVEL,
-        },
+        'loggers': {
+            # configure all of Django's loggers
+            'django': {
+                'handlers': ['console', 'file'],
+                'level': LOG_LEVEL,
+                'propagate': False,
+            },
+            'django.utils.autoreload': {
+                'level': 'ERROR',
+            },
+            # root configuration – for all of our own apps
+            '': {
+                'handlers': ['console', 'file'],
+                'level': LOG_LEVEL,
+            },
+        }
     }
-}

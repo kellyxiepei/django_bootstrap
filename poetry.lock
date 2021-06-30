@@ -1,4 +1,15 @@
 [[package]]
+name = "aliyun-fc2"
+version = "2.5.0"
+description = "Aliyun FunctionCompute SDK2"
+category = "main"
+optional = false
+python-versions = "*"
+
+[package.dependencies]
+requests = ">=2.20.0"
+
+[[package]]
 name = "aliyun-python-sdk-core"
 version = "2.13.35"
 description = "The core module of Aliyun Python SDK."
@@ -231,9 +242,12 @@ socks = ["PySocks (>=1.5.6,!=1.5.7,<2.0)"]
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.6"
-content-hash = "b4ed7f8166a8339afb851a88cbfc0cec46488fc3b55be8fc667ac889bc5090ff"
+content-hash = "3a52c843b93e29f3b9dd80aa45c2b616c1d50355523a68a9f307c023b0b00b6a"
 
 [metadata.files]
+aliyun-fc2 = [
+    {file = "aliyun-fc2-2.5.0.tar.gz", hash = "sha256:f353b05db56d8ed2bad868857e89f21a7d6a56a0f5cb098750bd783fac007f83"},
+]
 aliyun-python-sdk-core = [
     {file = "aliyun-python-sdk-core-2.13.35.tar.gz", hash = "sha256:60129b597efb0040df9e2fe3191fec4387889f2eef9c08dc4d5079f35c43837a"},
 ]
