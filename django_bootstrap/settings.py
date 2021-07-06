@@ -15,6 +15,7 @@ from dynaconf import settings as dyna_settings
 from pathlib import Path
 
 import pymysql
+
 pymysql.install_as_MySQLdb()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -29,7 +30,7 @@ SECRET_KEY = 'django-insecure-hl-qs1w^vnjg&r)6)zm9o2jwca60e-#=$ckfz(l4j1d=pkzmj@
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = dyna_settings.as_bool('DEBUG')
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 # Application definition
 
