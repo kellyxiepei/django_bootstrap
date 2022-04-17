@@ -2,7 +2,7 @@
 name = "django_bootstrap"
 version = "0.1.0"
 description = ""
-authors = ["kellyxiepei/django_bootstrap"]
+authors = ["Kelly Xiepei <kellyxiepei@gmail.com>"]
 
 [tool.poetry.dependencies]
 python = "^3.6"
