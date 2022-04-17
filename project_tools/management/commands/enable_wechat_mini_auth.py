@@ -7,7 +7,7 @@ from project_tools.file_content_util import insert_text_after
 
 
 class Command(BaseCommand):
-    help = 'Start a new django app with a pre-defined code structure.'
+    help = 'Enable wechat mini auth in this app.'
 
     def add_arguments(self, parser):
         parser.add_argument('app_name', type=str)

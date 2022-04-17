@@ -53,9 +53,9 @@ This command creates a new app with pre-defined code structure. Please take a lo
 
 
 
-## Authentication
+## 5 Authentication
 
-### 4.1 Mobile Authentication
+### 5.1 Mobile Authentication
 ```
 python manage.py enable_mobile_auth <app_name>
 ```
@@ -64,12 +64,15 @@ And then you will have these two api:
 /api/<app_name>/mobile_auth/login
 
 
-### 4.2 Wechat Mini Authentication
+### 5.2 Wechat Mini Authentication
 ```
 python manage.py enable_wechat_mini_auth <app_name>
 ```
 And then you will have this api:
 /api/<app_name>/wechat_mini_auth/login
+
+## 6 Deploy to Alibaba cloud function computing.
+
 
 # TODO
 ## Create a command to deploy django app to alibaba cloud serverless platform.
