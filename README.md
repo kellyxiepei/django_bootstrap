@@ -16,6 +16,7 @@ pip install poetry
 
 ## 2 Build project
 ```
+poetry install
 poetry build
 ```
 
