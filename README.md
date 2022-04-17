@@ -25,7 +25,7 @@ poetry build
 ```
 docker run -d --name django_bootstrap-db -p 3306:3306 -e MYSQL_ROOT_PASSWORD=123456 mysql:8
 docker exec -it django_bootstrap-db bash
-mysql -u root -p 123456
+mysql -u root -p123456
 mysql> create database django_bootstrap charset=utf8;
 ```
 ### 3.2 start a redis server
@@ -68,6 +68,7 @@ And then you will have these two api:
 /api/<app_name>/mobile_auth/send_sms
 /api/<app_name>/mobile_auth/login
 
+And you need implement MobileUserStoreBase
 
 ### 5.2 Wechat Mini Authentication
 ```
