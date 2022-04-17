@@ -22,13 +22,16 @@ poetry build
 ## 3 Configure local environment
 ### 3.1 start a mysql server and create a database
 ```
+docker run -d --name django_bootstrap-db -p 3306:3306 -e MYSQL_ROOT_PASSWORD=123456 mysql:8
+docker exec -it django_bootstrap-db bash
+mysql -u root -p 123456
 mysql> create database django_bootstrap charset=utf8;
 ```
 ### 3.2 start a redis server
 ```
 #See the redis document or using docker:
 
-docker run -d --name testredis -p 6379:6379 redis:3 --requirepass "123456"
+docker run -d --name django_bootstrap-redis -p 6379:6379 redis:3 --requirepass "123456"
 ```
 ### 3.3 update local configuration
 ```
