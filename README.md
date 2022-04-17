@@ -2,9 +2,9 @@
 
 # Get Started
 ```
-curl -i https://raw.githubusercontent.com/kellyxiepei/django_bootstrap/main/project_tools/django_bootstrap.sh -o django_bootstrap.sh
+curl -i https://raw.githubusercontent.com/kellyxiepei/django_bootstrap/main/project_tools/create_new_project.sh -o create_new_project.sh
 
-bash django_bootstrap.sh my_new_project
+bash create_new_project.sh my_new_project
 ```
 
 # After creating the project 
@@ -35,6 +35,7 @@ docker run -d --name django_bootstrap-redis -p 6379:6379 redis:3 --requirepass "
 ```
 ### 3.3 update local configuration
 ```
+cp .env.example .env 
 vim .env
 ```
 
