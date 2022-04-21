@@ -128,10 +128,10 @@ class MobileAuthLoginView(View):
         return False
 
     @staticmethod
-    def cache_token(mobile, expiration_time=30 * 24 * 60 * 60):
+    def cache_token(uid, expiration_time=30 * 24 * 60 * 60):
         """ 缓存user, 生成token """
         token = uuid.uuid4().hex
-        cache.set('user_token_' + token, mobile, expiration_time)
-        logger.info(f"cached user mobile: {mobile}, "
+        cache.set('user_token_' + token, uid, expiration_time)
+        logger.info(f"cached user uid: {uid}, "
                     f"expiration time: {expiration_time}s")
         return token
