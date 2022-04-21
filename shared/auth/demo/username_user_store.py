@@ -1,7 +1,7 @@
 from shared.auth.mobile.support_mobile import MobileUserStoreBase
 
 
-class DemoUsernameUser():
+class DemoUsernameUser:
     def __init__(self, username, password):
         self._username = username
         self._password = password
