@@ -2,7 +2,7 @@ import hashlib
 import uuid
 
 from django.views import View
-from marshmallow import fields, validate
+from marshmallow import fields, validate, Schema
 
 from django.core.cache import cache
 
