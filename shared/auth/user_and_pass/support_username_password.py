@@ -1,4 +1,5 @@
 import hashlib
+import logging
 import uuid
 
 from django.views import View
@@ -40,6 +41,9 @@ class LoginView(View):
             return self.ERROR_USERNAME_PASSWORD
         if not hashlib.md5(password.encode(encoding='utf8')).hexdigest() == user.password:
             return self.ERROR_USERNAME_PASSWORD
+
+        token = self.cache_token(username)
+        return GenericJsonResponse(data=dict(token=token))
 
     @staticmethod
     def cache_token(uid, expiration_time=30 * 24 * 60 * 60):
