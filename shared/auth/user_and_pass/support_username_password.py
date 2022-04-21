@@ -46,10 +46,25 @@ class LoginView(View):
         return GenericJsonResponse(data=dict(token=token))
 
     @staticmethod
-    def cache_token(uid, expiration_time=30 * 24 * 60 * 60):
+    def cache_token(username, expiration_time=30 * 24 * 60 * 60):
         """ 缓存user, 生成token """
         token = uuid.uuid4().hex
-        cache.set('user_token_' + token, uid, expiration_time)
-        logger.info(f"cached user uid: {uid}, "
+        cache.set('user_token_' + token, username, expiration_time)
+        logger.info(f"cached user username: {username}, "
                     f"expiration time: {expiration_time}s")
         return token
+
+
+class UsernamePasswordAuthentication(BaseAuthentication):
+    def authenticate(self, request):
+        token = request.META.get('HTTP_TOKEN', '')
+        if not token:
+            raise AuthenticationFailed('您未登陆')
+        username = cache.get('user_token_' + token)
+        if not username:
+            raise AuthenticationFailed('您未登陆')
+        user = self.get_user_by_username(username)
+        if not user:
+            raise AuthenticationFailed('您未登录')
+
+        return user

@@ -6,6 +6,7 @@ import uuid
 from django.core.cache import cache
 from django.views import View
 
+from shared.auth.authentication import AuthenticationFailed, BaseAuthentication
 from shared.auth.mobile.support_mobile_ali_sms_util import send_sms, SendSmsTooOften, SmsServiceIssue, SendSmsFailed
 from shared.redis_utils import RedisUtil
 from shared.response import GenericJsonResponse
@@ -128,10 +129,25 @@ class MobileAuthLoginView(View):
         return False
 
     @staticmethod
-    def cache_token(uid, expiration_time=30 * 24 * 60 * 60):
+    def cache_token(mobile, expiration_time=30 * 24 * 60 * 60):
         """ 缓存user, 生成token """
         token = uuid.uuid4().hex
-        cache.set('user_token_' + token, uid, expiration_time)
-        logger.info(f"cached user uid: {uid}, "
+        cache.set('user_token_' + token, mobile, expiration_time)
+        logger.info(f"cached user uid: {mobile}, "
                     f"expiration time: {expiration_time}s")
         return token
+
+
+class MobileAuthentication(BaseAuthentication):
+    def authenticate(self, request):
+        token = request.META.get('HTTP_TOKEN', '')
+        if not token:
+            raise AuthenticationFailed('您未登陆')
+        mobile = cache.get('user_token_' + token)
+        if not mobile:
+            raise AuthenticationFailed('您未登陆')
+        user = self.get_user_by_mobile(mobile)
+        if not user:
+            raise AuthenticationFailed('您未登录')
+
+        return user

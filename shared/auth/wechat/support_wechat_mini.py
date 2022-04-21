@@ -7,6 +7,8 @@ from django.core.cache import cache
 from django.views import View
 
 from dynaconf import settings
+
+from shared.auth.authentication import AuthenticationFailed, BaseAuthentication
 from shared.response import GenericJsonResponse
 from shared.view_decorators import json_request
 from marshmallow import Schema, fields
@@ -71,3 +73,18 @@ class WechatMiniAuthLoginView(View):
         logger.info(f"cached user union_id: {json.dumps(wechat_user_info)}, "
                     f"expiration time: {expiration_time}s")
         return token
+
+
+class WechatAuthentication(BaseAuthentication):
+    def authenticate(self, request):
+        token = request.META.get('HTTP_TOKEN', '')
+        if not token:
+            raise AuthenticationFailed('您未登陆')
+        wechat_user_info = cache.get('user_token_' + token)
+        if not wechat_user_info:
+            raise AuthenticationFailed('您未登陆')
+        user = json.loads(wechat_user_info)
+        if not user:
+            raise AuthenticationFailed('您未登录')
+
+        return user
