@@ -92,6 +92,8 @@ And you need implement UsernameUserStoreBase and replace UsernameUserStoreDemo.
 
 ## 6 Deploy to Alibaba cloud function computing.
 
+## 7 Deploy to a server by running docker.
+
 
 # TODO
 ## Create a command to deploy django app to alibaba cloud serverless platform.
