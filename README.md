@@ -70,7 +70,7 @@ And then you will have these two api:
 /api/<app_name>/mobile_auth/send_sms
 /api/<app_name>/mobile_auth/login
 
-And you need implement MobileUserStoreBase
+And you need implement MobileUserStoreBase and replace MobileUserStoreDemo.
 
 ### 5.2 Wechat Mini Authentication
 ```
@@ -78,6 +78,17 @@ python manage.py enable_wechat_mini_auth <app_name>
 ```
 And then you will have this api:
 /api/<app_name>/wechat_mini_auth/login
+
+And you need implement UnionIdUserStoreBase and replace MobileUserStoreDemo.
+
+### 5.3 Username & Password Authentication
+```
+python manage.py enable_wechat_mini_auth <app_name>
+```
+And then you will have this api:
+/api/<app_name>/username_password_auth/login
+
+And you need implement UsernameUserStoreBase and replace UsernameUserStoreDemo.
 
 ## 6 Deploy to Alibaba cloud function computing.
 

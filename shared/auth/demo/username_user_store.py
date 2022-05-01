@@ -1,4 +1,4 @@
-from shared.auth.mobile.support_mobile import MobileUserStoreBase
+from shared.auth.user_and_pass.support_username_password import UsernameUserStoreBase
 
 
 class DemoUsernameUser:
@@ -15,6 +15,6 @@ class DemoUsernameUser:
         return self._password
 
 
-class MobileUserStoreDemo(MobileUserStoreBase):
+class MobileUserStoreDemo(UsernameUserStoreBase):
     def get_user_by_username(self, username):
         return DemoUsernameUser(username, 'e10adc3949ba59abbe56e057f20f883e')

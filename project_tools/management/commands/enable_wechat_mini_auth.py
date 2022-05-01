@@ -25,14 +25,14 @@ class Command(BaseCommand):
         file_content = insert_text_after(
             file_content,
             'from django.urls import path',
-            '\nfrom shared.auth.demo.union_id_user_store import UnionIdUserStore'
+            '\nfrom shared.auth.demo.union_id_user_store import UnionIdUserStoreDemo'
             '\nfrom shared.auth.wechat.support_wechat_mini import WechatMiniAuthLoginView'
         )
         file_content = insert_text_after(
             file_content,
             'urlpatterns = [',
             "\n    path('wechat_mini_auth/login', type('WechatMiniLoginView', "
-            "(WechatMiniAuthLoginView, UnionIdUserStore), "
+            "(WechatMiniAuthLoginView, UnionIdUserStoreDemo), "
             "dict()).as_view()),"
         )
         urls_file.write_text(file_content)

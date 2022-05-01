@@ -6,6 +6,6 @@ class DemoUnionIdUser():
         self._union_id = union_id
 
 
-class UnionIdUserStore(UnionIdUserStoreBase):
+class UnionIdUserStoreDemo(UnionIdUserStoreBase):
     def get_user_by_union_id(self, union_id):
         return DemoUnionIdUser(union_id)
