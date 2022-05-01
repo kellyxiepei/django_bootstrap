@@ -5,7 +5,7 @@ description = ""
 authors = ["Kelly Xiepei <kellyxiepei@gmail.com>"]
 
 [tool.poetry.dependencies]
-python = "^3.6"
+python = "^3.9"
 Django = "3.2.4"
 dynaconf = "3.1.4"
 marshmallow = "3.12.1"

@@ -26,7 +26,7 @@ poetry build
 docker run -d --name django_bootstrap-db -p 3306:3306 -e MYSQL_ROOT_PASSWORD=123456 mysql:8
 docker exec -it django_bootstrap-db bash
 mysql -u root -p123456
-mysql> create database django_bootstrap charset=utf8;
+mysql> create database django_bootstrap charset=utf8mb4;
 ```
 ### 3.2 start a redis server
 ```

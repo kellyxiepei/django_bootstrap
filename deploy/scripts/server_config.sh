@@ -16,12 +16,12 @@ yum install mysql-community-client
 #配置git
 cd ~/.ssh
 ssh-keygen
-cat id_rsa.pub #配置到gitee
+cat id_rsa.pub #配置到自己的git仓库
 yum install git
 
 #下载代码
 cd /opt/
-git clone git@github.com:kellyxiepei/django_bootstrap.git
+git clone git@github.com:kellyxiepei/django_bootstrap.git #换成自己的仓库地址
 
 #Build镜像
 cd django_bootstrap/
