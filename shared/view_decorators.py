@@ -39,3 +39,14 @@ def require_authentication(authenticator_class):
         return wrapper
 
     return deco
+
+def exception_handlers():
+    def deco(func):
+        @functools.wraps(func)
+        def wrapper(self, request, *args, **kwargs):
+            try:
+                return func(self, request, *args, **kwargs)
+            except Exception as e:
+                return GenericJsonResponse(code=2, message=str(e))
+        return wrapper
+    return deco
