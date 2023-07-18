@@ -1,5 +1,6 @@
 import functools
 
+from django.core.cache import cache
 from db_auth.models import User
 from shared.response import GenericJsonResponse
 
