@@ -80,6 +80,10 @@ class Command(BaseCommand):
         else:
             raise Exception(f'Unknown auth type: {auth_type}')
 
+        pyt_files = target_path.glob('**/*.pyt')
+        for file in pyt_files:
+            move_file(str(file), str(file)[:-1])
+
         urls_file = BASE_DIR / 'db_auth' / 'urls.py'
         file_content = urls_file.read_text(encoding='utf-8')
 
