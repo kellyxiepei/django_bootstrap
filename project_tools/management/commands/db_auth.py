@@ -64,40 +64,40 @@ class Command(BaseCommand):
         auth_type = options.get('auth_type').lower()
 
         if auth_type == 'mobile':
-            copy_tree(str(src_path / 'mobile'), str(target_path / 'mobile'))
+            dir_name = 'mobile'
             import_statement = 'from .mobile.support_mobile import MobileAuthSendSMSView, MobileAuthLoginView'
             url_pattern = "path('mobile_auth/send_sms', MobileAuthSendSMSView.as_view()), \n" \
-                          "path('mobile_auth/login', MobileAuthLoginView.as_view()),"
+                          "    path('mobile_auth/login', MobileAuthLoginView.as_view()),"
 
         elif auth_type == 'user_and_pass':
-            copy_tree(str(src_path / 'user_and_pass'), str(target_path / 'user_and_pass'))
+            dir_name = 'user_and_pass'
             import_statement = 'from .user_and_pass.support_username_password import UsernameLoginView'
             url_pattern = "path('username_password_auth/login', UsernameLoginView.as_view()),"
         elif auth_type == 'wechat_mini':
-            copy_tree(str(src_path / 'wechat_mini'), str(target_path / 'wechat_mini'))
-            import_statement = 'from .wechat.support_wechat_mini import WechatMiniAuthLoginView'
+            dir_name = 'wechat_mini'
+            import_statement = 'from .wechat_mini.support_wechat_mini import WechatMiniAuthLoginView'
             url_pattern = " path('wechat_mini_auth/login', WechatMiniAuthLoginView.as_view()),"
         else:
             raise Exception(f'Unknown auth type: {auth_type}')
 
-        pyt_files = target_path.glob('**/*.pyt')
-        for file in pyt_files:
-            move_file(str(file), str(file)[:-1])
-
         urls_file = BASE_DIR / 'db_auth' / 'urls.py'
         file_content = urls_file.read_text(encoding='utf-8')
-
         if file_content.find(import_statement) >= 0:
             return
 
         file_content = insert_text_after(
             file_content,
             'from django.urls import path',
-            import_statement
+            f"\n{import_statement}"
         )
         file_content = insert_text_after(
             file_content,
             'urlpatterns = [',
-            url_pattern
+            f"\n    {url_pattern}"
         )
         urls_file.write_text(file_content)
+
+        copy_tree(str(src_path / dir_name), str(target_path / dir_name))
+        pyt_files = target_path.glob('**/*.pyt')
+        for file in pyt_files:
+            move_file(str(file), str(file)[:-1])
