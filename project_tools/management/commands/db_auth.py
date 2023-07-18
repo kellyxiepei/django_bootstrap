@@ -19,6 +19,8 @@ class Command(BaseCommand):
         target_path = BASE_DIR / 'db_auth'
         if target_path.exists():
             return
+        else:
+            target_path.mkdir(parents=True, exist_ok=True)
 
         copy_file(str(src_path / '__init__.pyt'), str(target_path / '__init__.pyt'))
         copy_file(str(src_path / 'apps.pyt'), str(target_path / 'apps.pyt'))
