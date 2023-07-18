@@ -7,7 +7,7 @@ from project_tools.file_content_util import insert_text_after
 
 
 class Command(BaseCommand):
-    help = 'Enable wechat mini auth in this app.'
+    help = 'Enable wechat mini db_auth in this app.'
 
     def add_arguments(self, parser):
         parser.add_argument('app_name', type=str)
@@ -19,14 +19,14 @@ class Command(BaseCommand):
         urls_file = BASE_DIR / new_app_name / 'urls.py'
         file_content = urls_file.read_text(encoding='utf-8')
 
-        if file_content.find("from shared.auth.wechat.support_wechat_mini import WechatMiniAuthLoginView") >= 0:
+        if file_content.find("from shared.db_auth.wechat.support_wechat_mini import WechatMiniAuthLoginView") >= 0:
             return
 
         file_content = insert_text_after(
             file_content,
             'from django.urls import path',
-            '\nfrom shared.auth.demo.union_id_user_store import UnionIdUserStoreDemo'
-            '\nfrom shared.auth.wechat.support_wechat_mini import WechatMiniAuthLoginView'
+            '\nfrom shared.db_auth.demo.union_id_user_store import UnionIdUserStoreDemo'
+            '\nfrom shared.db_auth.wechat.support_wechat_mini import WechatMiniAuthLoginView'
         )
         file_content = insert_text_after(
             file_content,

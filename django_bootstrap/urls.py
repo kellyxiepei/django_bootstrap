@@ -16,4 +16,5 @@ Including another URLconf
 from django.urls import path, include
 
 urlpatterns = [
+    path('api/db_auth/', include(('db_auth.urls', 'db_auth')), name='db_auth'),
 ]

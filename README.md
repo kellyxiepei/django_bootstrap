@@ -9,8 +9,8 @@ bash create_new_project.sh my_new_project
 
 # After creating the project 
 ## 1 Install poetry
+Note: Maybe you'd like to create a new virtual env before running this command
 ```
-# Maybe you'd like to create a new virtual env before running this command
 pip install poetry
 ```
 
@@ -60,7 +60,7 @@ This command creates a new app with pre-defined code structure. Please take a lo
 
 
 
-## 5 Authentication
+## 5 Authentication Support
 
 ### 5.1 Mobile Authentication
 ```
@@ -83,7 +83,7 @@ And you need implement UnionIdUserStoreBase and replace MobileUserStoreDemo.
 
 ### 5.3 Username & Password Authentication
 ```
-python manage.py enable_wechat_mini_auth <app_name>
+python manage.py enable_username_password_auth <app_name>
 ```
 And then you will have this api:
 /api/<app_name>/username_password_auth/login
