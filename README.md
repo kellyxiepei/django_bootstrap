@@ -85,6 +85,11 @@ python manage.py db_auth mobile
 And then you will have these two api:
 /api/db_auth/mobile_auth/send_sms /api/db_auth/mobile_auth/login
 
+and use the following code to require authentication:
+```
+@require_authentication(authenticator_class=TokenAuthentication)
+```
+
 ### 5.2 Wechat Mini Authentication
 
 ```
@@ -94,6 +99,12 @@ python manage.py db_auth wechat_mini
 And then you will have this api:
 /api/db_auth/wechat_mini_auth/login
 
+and use the following code to require authentication:
+```
+@require_authentication(authenticator_class=TokenAuthentication)
+```
+
+
 ### 5.3 Username & Password Authentication
 
 ```
@@ -102,6 +113,11 @@ python manage.py db_auth user_and_pass
 
 And then you will have this api:
 /api/db_auth/username_password_auth/login
+
+and use the following code to require authentication:
+```
+@require_authentication(authenticator_class=TokenAuthentication)
+```
 
 ## 6 Deploy to Alibaba cloud function computing.
 

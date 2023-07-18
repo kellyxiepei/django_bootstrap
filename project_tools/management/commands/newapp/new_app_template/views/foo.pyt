@@ -2,9 +2,8 @@ from django.views import View
 
 from ..api_schema import FooSchema, CreateFooSchema
 from ..models import Foo
-from shared.auth.demo.authenticator_demo import DemoAuthentication
 from shared.response import GenericJsonResponse
-from shared.view_decorators import json_request, require_authentication
+from shared.view_decorators import json_request
 
 
 class GetFoo(View):
@@ -14,7 +13,6 @@ class GetFoo(View):
 
 
 class CreateFoo(View):
-    @require_authentication(authenticator_class=DemoAuthentication)
     @json_request(request_schema_class=CreateFooSchema)
     def post(self, request):
         foo = Foo(**request.data)
