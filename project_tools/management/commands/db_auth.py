@@ -56,18 +56,25 @@ class Command(BaseCommand):
         settings_file.write_text(file_content)
 
     def handle(self, *args, **options):
+        src_path = Path(__file__).parent / 'db_auth' / 'db_auth_template'
+        target_path = BASE_DIR / 'db_auth'
+
         self.init_db_auth_app()
 
         auth_type = options.get('auth_type').lower()
 
         if auth_type == 'mobile':
+            copy_tree(str(src_path / 'mobile'), str(target_path / 'mobile'))
             import_statement = 'from .mobile.support_mobile import MobileAuthSendSMSView, MobileAuthLoginView'
             url_pattern = "path('mobile_auth/send_sms', MobileAuthSendSMSView.as_view()), \n" \
                           "path('mobile_auth/login', MobileAuthLoginView.as_view()),"
+
         elif auth_type == 'user_and_pass':
+            copy_tree(str(src_path / 'user_and_pass'), str(target_path / 'user_and_pass'))
             import_statement = 'from .user_and_pass.support_username_password import UsernameLoginView'
             url_pattern = "path('username_password_auth/login', UsernameLoginView.as_view()),"
         elif auth_type == 'wechat_mini':
+            copy_tree(str(src_path / 'wechat_mini'), str(target_path / 'wechat_mini'))
             import_statement = 'from .wechat.support_wechat_mini import WechatMiniAuthLoginView'
             url_pattern = " path('wechat_mini_auth/login', WechatMiniAuthLoginView.as_view()),"
         else:
